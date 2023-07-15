@@ -12,6 +12,8 @@ router.get('/', async (req, res) => {
   }
 })
 
+
+
 // Getting One
 router.get('/:id', getSubscriber, (req, res) => {
   res.json(res.subscriber)
@@ -30,6 +32,30 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: err.message })
   }
 })
+
+//Insertion
+router.post("/",async(req,res)=>{
+/**
+ * 1- ne5ou e donnees (body ou params )
+ * 
+ * 2- connex avec BD et enregistrement 
+ * 3- reponse ok (rahou tzeed )
+ */
+
+  const subscriber=new Subscriber({
+    name:req.body.name,
+    subscribedToChannel:req.body.subscribedToChannel
+  })
+  try{
+    const newSubscriber=await subscriber.save();
+    res.status(201).json(newSubscriber);
+  }catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
+
+
 
 // Updating One
 router.patch('/:id', getSubscriber, async (req, res) => {
